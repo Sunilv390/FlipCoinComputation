@@ -4,10 +4,12 @@
 ISHEAD=1
 SINGLE=1
 DOUBLE=2
+TRIPLE=3
 
 #DECLARE A DICTIONARY TO STORE COMBINATIONS
 declare -A singleFlip
 declare -A doubleFlip
+declare -A tripleFlip
 
 read -p "Enter how many times to flip a coin " flipCoin
 
@@ -37,34 +39,41 @@ do
    then
       ((doubleFlip[$coinSide]++))
       echo ${!doubleFlip[@]}
-   else
-      echo "Invalid input"
+   elif [ $NumberCoin -eq $TRIPLE ]
+	then
+		((tripleFlip[$coinSide]++))
+      echo ${!tripleFlip[@]}
    fi
    coinSide=""
 done
 }
 echo "Enter 1 for Single Combination"
 echo "Enter 2 for Double Combination"
+echo "Enter 3 for Triple Combination"
 
 #FUNCTION TO GET PERCENTAGE
 function getPercent(){
 local NumberCoin=$1
 if [ $NumberCoin -eq $SINGLE ]
 then
-   for index in ${!singleFlip[@]}
+	for index in ${!singleFlip[@]}
    do
-      singleFlip[$index]=`echo "scale=2; ${singleFlip[$index]}*100/$flipCoin" | bc`
-      echo ${singleFlip[@]}
+		singleFlip[$index]=`echo "scale=2; ${singleFlip[$index]}*100/$flipCoin" | bc`
    done
 elif [ $NumberCoin -eq $DOUBLE ]
 then
    for index in ${!doubleFlip[@]}
    do
-      doubleFlip[$index]=`echo "scale=2; ${doubleFlip[$index]}*100/$flipCoin" | bc`
-      echo ${doubleFlip[@]}
+		doubleFlip[$index]=`echo "scale=2; ${doubleFlip[$index]}*100/$flipCoin" | bc`
    done
+elif [ $NumberCoin -eq $TRIPLE ]
+then
+	for index in ${!tripleFlip[@]}
+	do
+		tripleFlip[$index]=`echo "scale=2; ${tripleFlip[$index]}*100/$flipCoin" | bc`
+	done
 else
-   echo "No such value"
+	echo "Enter choice from 1-3"
 fi
 }
 
@@ -79,5 +88,9 @@ case $choice in
    isFlip $DOUBLE
    getPercent $DOUBLE
    ;;
+	$TRIPLE)
+	isFlip $TRIPLE
+	getPercent $TRIPLE
+	;;
 *)
 esac
