@@ -64,8 +64,6 @@ function getPercent(){
 		do
 			tripleFlip[$index]=`echo "scale=2; ${tripleFlip[$index]}*100/$flipCoin" | bc`
 		done
-	else
-		printf "Enter choice from 1-3\n"
 	fi
 }
 #PRINTING CHOICES
